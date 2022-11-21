@@ -10,11 +10,22 @@ import {MatSelectModule} from '@angular/material/select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatButtonModule} from '@angular/material/button';
 import { AddFolderComponent } from './add-folder/add-folder.component'
+import {MatDialogModule} from '@angular/material/dialog';
+import { AddFileComponent } from './add-file/add-file.component'
+import { MatTableModule } from '@angular/material/table';
+import { SearchComponent } from './search/search.component';
+import { FormsModule } from '@angular/forms';
+import { ViewPartitionComponent } from './view-partition/view-partition.component';
+import {HttpClientModule} from '@angular/common/http';
+import {NgToastModule} from 'ng-angular-popup';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddFolderComponent,
+    AddFileComponent,
+    SearchComponent,
+    ViewPartitionComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +35,12 @@ import { AddFolderComponent } from './add-folder/add-folder.component'
     MatToolbarModule,
     MatSelectModule,
     FontAwesomeModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule,
+    MatTableModule,
+    FormsModule,
+    HttpClientModule,
+    NgToastModule
   
   ],
   providers: [],

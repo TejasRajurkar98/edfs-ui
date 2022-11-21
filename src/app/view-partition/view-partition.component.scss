@@ -4,6 +4,7 @@ mat-dialog-container#modal-component {
     background-color: #1a1a1a;
     width: auto;
     
+    
 }
 
 
@@ -18,11 +19,14 @@ mat-dialog-container#modal-component {
 
 #modal-title {
     font-size: 22px;
+    display: flex;
+    justify-content: center;
 }
 
 #modal-footer {
-    justify-self: right;
+    justify-self: center;
     align-self: center;
+    padding-top: 100px;
 }
 
 #modal-action-button {

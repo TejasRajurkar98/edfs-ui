@@ -1,13 +1,12 @@
 <div id="modal-content-wrapper">
     <header id="modal-header">
-        <h1 id="modal-title">Enter Folder Name</h1>
+        <h1 id="modal-title">Upload Your File</h1>
     </header>
     <section id="modal-body">
-        <input #name matInput placeholder="Ex. User">
+        <input #name class="ng-hide" id="input-file-id" type="file"  accept=".csv" (change)="upload($event)"/>
     </section>
     <footer id="modal-footer">
         <button mat-raised-button id="modal-action-button" (click)="create(name.value)">Create</button>
         <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">Cancel</button>
     </footer>
 </div> 
-<lib-ng-toast></lib-ng-toast>

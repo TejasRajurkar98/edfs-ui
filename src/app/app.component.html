@@ -325,22 +325,26 @@
     </a>
 </div> -->
 
-<app-add-folder *ngIf="addFolder"></app-add-folder>
+<!-- <app-add-folder *ngIf="addFolder"></app-add-folder> -->
 
 <div class = 'toolbar'>
   <mat-toolbar color = "primary">
-    <span class = "gap">EDFS</span>
+    <span class = "gap">
+      <img class = "logo" src="../assets/usc-logo.png" alt="">
+    </span>
     <div class="add-button">
-      <button mat-flat-button style="margin-right: 30px;" (click)="openAddFolder()"><fa-icon [icon]="faAdd" ></fa-icon>  Folder</button>
-      <button mat-flat-button style="margin-right: 30px;"><fa-icon [icon]="faAdd"></fa-icon>  File</button>
+      <button mat-flat-button style="margin-right: 30px;" (click)="openAddFolder()" *ngIf="!showFile"><fa-icon [icon]="faAdd" ></fa-icon>  Folder</button>
+      <button mat-flat-button style="margin-right: 30px;" (click)="openAddFile()" *ngIf="!showFile"><fa-icon [icon]="faAdd"></fa-icon>  File</button>
+      <button mat-flat-button style="margin-right: 30px;" (click)="openSearch()" *ngIf="showFile"><fa-icon [icon]="faSearch"></fa-icon>  Run Query</button>
+      <button mat-flat-button style="margin-right: 30px;" (click)="openViewPartition()" *ngIf="showFile"><fa-icon [icon]="faSearch"></fa-icon>  View Partition</button>
     </div>
     <span class = "filler"></span>
     
     <span>
       <mat-form-field appearance="fill">
         <mat-select [(value)]="this.selectedDatabase" (selectionChange)="print()">
-          <mat-option *ngFor="let database of databases" [value]="database">
-            {{database}}
+          <mat-option *ngFor="let database of databases" [value]="database.value">
+            {{database.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -363,7 +367,7 @@
   </mat-sidenav>
   <mat-sidenav-content>Main content</mat-sidenav-content>
 </mat-sidenav-container> -->
-<div *ngIf="!addFolder">
+<div>
   <div (click)="back()" class="back-button" >
     <span *ngIf="this.currentPath !='/'">
       <fa-icon [icon] = 'faAngleLeft'></fa-icon>
@@ -374,14 +378,41 @@
         Root
     </span>
   </div>
-  <div class = 'icon-flexbox'>
+  <div class = 'icon-flexbox' *ngIf="!showFile">
     <span  *ngFor="let child of children" class="icon-name" (click)="explore(child)">
         <fa-icon [icon]="faFile" class="fa-solid fa-file fa-10x icon" *ngIf="child.split('.')[1]"></fa-icon>
         <fa-icon [icon]="faFolder" class="fa-solid fa-file fa-10x icon" *ngIf="!child.split('.')[1]"></fa-icon>
         {{child}}
     </span>
   </div>
+  <div *ngIf="showFile">
+    <!-- <table mat-table>
+      <tr mat-row>
+        <th mat-header *ngFor="let column of columns">
+          {{column}}
+        </th>
+      </tr>
+      <tr *ngFor="let record of data">
+        <td mat-cell *ngFor="let column of columns">
+          {{record[column]}}
+
+        </td>
+
+      </tr>
+    </table> -->
+    <table mat-table [dataSource]="data" class="mat-elevation-z8">
+      <ng-container [matColumnDef]="column" *ngFor="let column of columns">
+        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+    </table>
+
+  </div>
 </div>
 
 
+<lib-ng-toast></lib-ng-toast>
 <router-outlet></router-outlet>
