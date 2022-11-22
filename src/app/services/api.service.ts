@@ -14,6 +14,7 @@ export class ApiService {
   currentPath = '';
   database = '';
   columns: any[] = [];
+  children: String[] = [];
   searchData ='{"schema":{"fields":[{"name":"index","type":"integer"},{"name":"aaa","type":"integer"},{"name":"bbb","type":"string"},{"name":"ccc","type":"string"},{"name":"ddd","type":"integer"}],"primaryKey":["index"],"pandas_version":"1.4.0"},"data":[{"index":0,"aaa":1,"bbb":"qwe","ccc":"asd","ddd":1234},{"index":4,"aaa":5,"bbb":"tyu","ccc":"fgh","ddd":4677}]}';
 
 
@@ -29,6 +30,10 @@ export class ApiService {
 
   public mkdir(path: String){
     return this.http.get(`${this.BASE_URL}${this.database}/mkdir?path=${path}`);
+  }
+
+  public rm(path: String){
+    return this.http.get(`${this.BASE_URL}${this.database}/rm?path=${path}`)
   }
 }
 

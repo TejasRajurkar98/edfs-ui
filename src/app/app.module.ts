@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { ViewPartitionComponent } from './view-partition/view-partition.component';
 import {HttpClientModule} from '@angular/common/http';
 import {NgToastModule} from 'ng-angular-popup';
+import { RemoveFileComponent } from './remove-file/remove-file.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {NgToastModule} from 'ng-angular-popup';
     AddFileComponent,
     SearchComponent,
     ViewPartitionComponent,
+    RemoveFileComponent,
   ],
   imports: [
     BrowserModule,

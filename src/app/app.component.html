@@ -327,7 +327,7 @@
 
 <!-- <app-add-folder *ngIf="addFolder"></app-add-folder> -->
 
-<div class = 'toolbar'>
+<div class = 'toolbar sticky'>
   <mat-toolbar color = "primary">
     <span class = "gap">
       <img class = "logo" src="../assets/usc-logo.png" alt="">
@@ -335,6 +335,7 @@
     <div class="add-button">
       <button mat-flat-button style="margin-right: 30px;" (click)="openAddFolder()" *ngIf="!showFile"><fa-icon [icon]="faAdd" ></fa-icon>  Folder</button>
       <button mat-flat-button style="margin-right: 30px;" (click)="openAddFile()" *ngIf="!showFile"><fa-icon [icon]="faAdd"></fa-icon>  File</button>
+      <button mat-flat-button style="margin-right: 30px;" (click)="openRemoveFile()" *ngIf="!showFile"><fa-icon [icon]="faX"></fa-icon>  File</button>
       <button mat-flat-button style="margin-right: 30px;" (click)="openSearch()" *ngIf="showFile"><fa-icon [icon]="faSearch"></fa-icon>  Run Query</button>
       <button mat-flat-button style="margin-right: 30px;" (click)="openViewPartition()" *ngIf="showFile"><fa-icon [icon]="faSearch"></fa-icon>  View Partition</button>
     </div>
@@ -400,6 +401,7 @@
 
       </tr>
     </table> -->
+    <div class="table-responsive">
     <table mat-table [dataSource]="data" class="mat-elevation-z8">
       <ng-container [matColumnDef]="column" *ngFor="let column of columns">
         <th mat-header-cell *matHeaderCellDef> {{column}} </th>
@@ -409,6 +411,8 @@
       <tr mat-header-row *matHeaderRowDef="columns"></tr>
       <tr mat-row *matRowDef="let row; columns: columns;"></tr>
     </table>
+    </div>
+    
 
   </div>
 </div>

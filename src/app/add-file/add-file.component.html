@@ -2,11 +2,15 @@
     <header id="modal-header">
         <h1 id="modal-title">Upload Your File</h1>
     </header>
-    <section id="modal-body">
+    <section id="modal-body" class="add-file">
         <input #name class="ng-hide" id="input-file-id" type="file"  accept=".csv" (change)="upload($event)"/>
+        <mat-label>No. of partitions:</mat-label>
+        <input #no class="ng-hide" id="input-file-id" type="number"/>
+        <mat-label>Partition Field:</mat-label>
+        <input #field class="ng-hide" id="input-file-id" type="text"/>
     </section>
     <footer id="modal-footer">
-        <button mat-raised-button id="modal-action-button" (click)="create(name.value)">Create</button>
+        <button mat-raised-button id="modal-action-button" (click)="create(name.value, no.value, field.value)">Create</button>
         <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">Cancel</button>
     </footer>
 </div> 

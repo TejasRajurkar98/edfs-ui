@@ -1,11 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { faFile, faFolder, faAngleLeft, faHome, faAdd, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faFile, faFolder, faAngleLeft, faHome, faAdd, faSearch, faX } from '@fortawesome/free-solid-svg-icons';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddFolderComponent } from './add-folder/add-folder.component';
 import { ApiService } from '../app/services/api.service';
 import { AddFileComponent } from './add-file/add-file.component';
 import { SearchComponent } from './search/search.component';
 import { ViewPartitionComponent } from './view-partition/view-partition.component';
+import {RemoveFileComponent} from './remove-file/remove-file.component';
 import {NgToastService} from 'ng-angular-popup';
 
 
@@ -29,30 +30,34 @@ interface Database{
 export class AppComponent implements OnInit {
   children: String[] = [];
   selectedDatabase = '';
-  databases: Database[] = [{name: 'MySQL', value: 'MySQL'},{name: 'MongoDB', value: 'mongodb'}];
+  databases: Database[] = [{name: 'MySQL', value: 'sql'},{name: 'MongoDB', value: 'mongodb'}];
   faFile = faFile;
   faFolder = faFolder;
   faAngleLeft = faAngleLeft;
   faHome = faHome;
   faAdd = faAdd;
   faSearch = faSearch;
+  faX = faX;
   currentPath = '';
   addFolder = false;
   showFile = false;
   columns: any[] = [];
   data: any;
   jsonData: any;
+  removeFile = false;
 
   constructor(public matDialog: MatDialog, public api: ApiService) { }
 
   ngOnInit() {
     this.currentPath = '/';
-    this.selectedDatabase = 'MySQL';
+    this.selectedDatabase = 'sql';
     this.api.currentPath = this.currentPath;
     this.api.database = this.selectedDatabase;
+    
     //call ls of root at start
     this.api.ls(this.currentPath).subscribe((response: any) => {
       this.children = response;
+      this.api.children = this.children;
     })
     // this.children = ['Tejas', 'Zainab', 'Qasim', 'Hello.csv'];
   }
@@ -68,6 +73,7 @@ export class AppComponent implements OnInit {
       //call ls of name
       this.api.ls(this.currentPath).subscribe((response: any) => {
         this.children = response;
+        this.api.children = this.children;
       })
       // if(name == 'Tejas'){
   
@@ -97,6 +103,7 @@ export class AppComponent implements OnInit {
       this.jsonData = {};
       this.columns = [];
       this.api.columns = [];
+      this.api.children = this.children;
       console.log("On Back Data:" + this.data);
     });
   }
@@ -117,6 +124,7 @@ export class AppComponent implements OnInit {
     modalDialog.afterClosed().subscribe(()=>{
       this.api.ls(this.currentPath).subscribe((response: any) => {
         this.children = response;
+        this.api.children = this.children;
       })
     });
   }
@@ -130,6 +138,29 @@ export class AppComponent implements OnInit {
     dialogConfig.width = "600px";
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(AddFileComponent, dialogConfig);
+    modalDialog.afterClosed().subscribe(()=>{
+      this.api.ls(this.currentPath).subscribe((response: any) => {
+        this.children = response;
+        this.api.children = this.children;
+      })
+    });
+  }
+
+  openRemoveFile(){
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = "modal-component";
+    dialogConfig.height = "350px";
+    dialogConfig.width = "600px";
+    // https://material.angular.io/components/dialog/overview
+    const modalDialog = this.matDialog.open(RemoveFileComponent, dialogConfig);
+    modalDialog.afterClosed().subscribe(()=>{
+      this.api.ls(this.currentPath).subscribe((response: any) => {
+        this.children = response;
+        this.api.children = this.children;
+      })
+    });
   }
 
   openSearch() {
@@ -192,4 +223,6 @@ export class AppComponent implements OnInit {
     this.api.currentPath = this.currentPath;
     this.api.columns = this.columns;
   }
+
+  
 }
