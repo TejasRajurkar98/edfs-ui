@@ -21,9 +21,6 @@ export class AddFileComponent implements OnInit {
     console.log(name, no, field);
     if (this.api.currentPath.length > 1) {
       //call mkdir
-
-
-
       console.log('Create:' + this.api.currentPath + '/' + name);
       // console.log(this.file);
       // let fileReader = new FileReader();
