@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ApiService {
 
-  BASE_URL = 'https://90qm6.mocklab.io/';
+  BASE_URL = 'http://127.0.0.1:5000/';
   //BASE_URL = 'https://41ef-2607-fb90-21d5-f4c-a838-83cd-b6f2-eec5.ngrok.io/'
 
   constructor(private http: HttpClient ) { }

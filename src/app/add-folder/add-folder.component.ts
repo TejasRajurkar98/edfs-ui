@@ -25,7 +25,7 @@ export class AddFolderComponent implements OnInit {
       //call mkdir
       this.path = this.api.currentPath+'/'+name;
       this.api.mkdir(this.path).subscribe((response: any) =>{
-        if(response['flag']){
+        if(response['flag']>0){
           this.toast.success({detail :'Success', summary : response.desc, sticky : true, position : 'br'});
         }
         else{
@@ -39,7 +39,7 @@ export class AddFolderComponent implements OnInit {
       //call mkdir
       this.path = this.api.currentPath+name;
       this.api.mkdir(this.path).subscribe((response: any) =>{
-        if(response['flag']){
+        if(response['flag']>0){
           this.toast.success({detail :'Success', summary : response.desc, sticky : true, position : 'br'});
         }
         else{

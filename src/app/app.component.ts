@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
     
     //call ls of root at start
     this.api.ls(this.currentPath).subscribe((response: any) => {
-      this.children = response;
+      this.children = response['files'];
       this.api.children = this.children;
     })
     // this.children = ['Tejas', 'Zainab', 'Qasim', 'Hello.csv'];
@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
       this.api.currentPath = this.currentPath;
       //call ls of name
       this.api.ls(this.currentPath).subscribe((response: any) => {
-        this.children = response;
+        this.children = response['files'];
         this.api.children = this.children;
       })
       // if(name == 'Tejas'){
@@ -97,7 +97,7 @@ export class AppComponent implements OnInit {
     //call ls of currentPath
     // this.children = ['Tejas', 'Zainab', 'Qasim', 'Hello.csv'];
     this.api.ls(this.currentPath).subscribe((response: any) => {
-      this.children = response;
+      this.children = response['files'];
       this.showFile = false;
       this.data = null;
       this.jsonData = {};
@@ -123,7 +123,7 @@ export class AppComponent implements OnInit {
     const modalDialog = this.matDialog.open(AddFolderComponent, dialogConfig);
     modalDialog.afterClosed().subscribe(()=>{
       this.api.ls(this.currentPath).subscribe((response: any) => {
-        this.children = response;
+        this.children = response['files'];
         this.api.children = this.children;
       })
     });
@@ -140,7 +140,7 @@ export class AppComponent implements OnInit {
     const modalDialog = this.matDialog.open(AddFileComponent, dialogConfig);
     modalDialog.afterClosed().subscribe(()=>{
       this.api.ls(this.currentPath).subscribe((response: any) => {
-        this.children = response;
+        this.children = response['files'];
         this.api.children = this.children;
       })
     });
@@ -157,7 +157,7 @@ export class AppComponent implements OnInit {
     const modalDialog = this.matDialog.open(RemoveFileComponent, dialogConfig);
     modalDialog.afterClosed().subscribe(()=>{
       this.api.ls(this.currentPath).subscribe((response: any) => {
-        this.children = response;
+        this.children = response['files'];
         this.api.children = this.children;
       })
     });

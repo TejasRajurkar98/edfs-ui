@@ -30,9 +30,9 @@ export class RemoveFileComponent implements OnInit {
   // When the user clicks the action button a.k.a. the logout button in the\
   // modal, show an alert and followed by the closing of the modal
   rm() {
-    this.api.rm(this.currentPath+'/'+this.selectedFile).subscribe((response: any) =>{
+    this.api.rm(this.currentPath+this.selectedFile).subscribe((response: any) =>{
 
-      if(response['flag']){
+      if(response['flag']>0){
         this.toast.success({detail :'Success', summary : response.desc, sticky : true, position : 'br'});
       }
       else{
