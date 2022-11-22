@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ApiService } from '../services/api.service'
+import { ApiService } from '../services/api.service';
+import {NgToastService} from 'ng-angular-popup';
 
 @Component({
   selector: 'app-add-file',
@@ -10,9 +11,12 @@ import { ApiService } from '../services/api.service'
 export class AddFileComponent implements OnInit {
 
   file: any;
-  constructor(public dialogRef: MatDialogRef<AddFileComponent>, public api: ApiService) { }
+  currentPath = '';
+  fileName = '';
+  constructor(public dialogRef: MatDialogRef<AddFileComponent>, public api: ApiService, public toast:NgToastService) { }
 
   ngOnInit(): void {
+    this.currentPath = this.api.currentPath;
   }
 
   // When the user clicks the action button a.k.a. the logout button in the\
@@ -22,6 +26,17 @@ export class AddFileComponent implements OnInit {
     if (this.api.currentPath.length > 1) {
       //call mkdir
       console.log('Create:' + this.api.currentPath + '/' + name);
+      const body = {file: this.file}
+      console.log(body);
+      let path = this.api.currentPath + '/' + name
+      this.api.put(path, no, field,body).subscribe((response: any) => {
+        if(response['flag']>0){
+          this.toast.success({detail :'Success', summary : response.desc, sticky : true, position : 'br'});
+        }
+        else{
+          this.toast.error({detail :'Error', summary : response.desc, sticky : true, position : 'br'}); 
+        }
+      });
       // console.log(this.file);
       // let fileReader = new FileReader();
       // fileReader.onload = (e) => {
@@ -30,9 +45,21 @@ export class AddFileComponent implements OnInit {
       // fileReader.readAsText(this.file);
     }
 
-    else
-      //call mkdir
+    else{
+      const body = {file: this.file}
       console.log('Create:' + this.api.currentPath + name);
+      let path = this.api.currentPath + name
+      this.api.put(path, no, field,body).subscribe((response: any) => {
+        if(response['flag']>0){
+          this.toast.success({detail :'Success', summary : response.desc, sticky : true, position : 'br'});
+        }
+        else{
+          this.toast.error({detail :'Error', summary : response.desc, sticky : true, position : 'br'}); 
+        }
+      });
+    }
+      //call mkdir
+     
     this.closeModal();
   }
 
@@ -46,6 +73,7 @@ export class AddFileComponent implements OnInit {
     this.file = null;
     if (event.target.files && event.target.files.length > 0) {
       this.file = event.target.files[0];
+      console.log(this.file['name']);
     }
   }
 

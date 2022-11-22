@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class ApiService {
 
   BASE_URL = 'http://127.0.0.1:5000/';
-  //BASE_URL = 'https://41ef-2607-fb90-21d5-f4c-a838-83cd-b6f2-eec5.ngrok.io/'
+  // BASE_URL = 'https://90qm6.mocklab.io/'
 
   constructor(private http: HttpClient ) { }
 
@@ -33,7 +33,19 @@ export class ApiService {
   }
 
   public rm(path: String){
-    return this.http.get(`${this.BASE_URL}${this.database}/rm?path=${path}`)
+    return this.http.get(`${this.BASE_URL}${this.database}/rm?path=${path}`);
+  }
+
+  public getPartitionLocations(path: String){
+    return this.http.get(`${this.BASE_URL}${this.database}/getPartitionLocations?path=${path}`);
+  }
+
+  public readPartition(path: String){
+    return this.http.get(`${this.BASE_URL}${this.database}/readPartition?path=${path}`);
+  }
+
+  public put(path: String, no: String, field: String, body: any){
+    return this.http.put(`${this.BASE_URL}${this.database}/put?path=${path}&no=${no}&field=${field}`, body);
   }
 }
 
