@@ -2,16 +2,21 @@
     <header id="modal-header">
         <h1 id="modal-title">Upload Your File</h1>
     </header>
-    <section id="modal-body" class="add-file">
-        <input #name class="ng-hide" id="input-file-id" type="file"  accept=".csv" (change)="upload($event)"/>
-        <mat-label>No. of partitions:</mat-label>
-        <input #no class="ng-hide" id="input-file-id" type="number"/>
-        <mat-label>Partition Field:</mat-label>
-        <input #field class="ng-hide" id="input-file-id" type="text"/>
-    </section>
+    <form (ngSubmit)="create(name.value, no.value, field.value)" method="post" enctype="multipart/form-data">
+
+    <section id="modal-body" class="add-file" style="padding-bottom: 10px;">
+            <input #name class="ng-hide" id="input-file-id" type="file"  accept=".csv" (change)="upload($event)"/>
+            <mat-label>No. of partitions:</mat-label>
+            <input #no class="ng-hide" id="input-file-id" type="number"/>
+            <mat-label>Partition Field:</mat-label>
+            <input #field class="ng-hide" id="input-file-id" type="text"/>   
+        
+        </section>
+    
     <footer id="modal-footer">
-        <button mat-raised-button id="modal-action-button" (click)="create(name.value, no.value, field.value)">Create</button>
+        <button type="submit" mat-raised-button id="modal-action-button" >Create</button>
         <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">Cancel</button>
     </footer>
+</form>
 </div> 
 <lib-ng-toast></lib-ng-toast>

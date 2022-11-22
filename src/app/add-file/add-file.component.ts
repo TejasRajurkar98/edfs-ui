@@ -23,13 +23,22 @@ export class AddFileComponent implements OnInit {
   // modal, show an alert and followed by the closing of the modal
   create(name: String, no: String, field: String) {
     console.log(name, no, field);
+    let data: any;
     if (this.api.currentPath.length > 1) {
       //call mkdir
-      console.log('Create:' + this.api.currentPath + '/' + name);
+      console.log('Create:' + this.api.currentPath + '/' + this.file['name']);
+      let fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        console.log(fileReader.result);
+        data = fileReader.result
+        console.log(typeof data);
+        // let fileJson = JSON.parse(data);
+        let formData = new FormData();
+      formData.append('file',data);
       const body = {file: this.file}
-      console.log(body);
-      let path = this.api.currentPath + '/' + name
-      this.api.put(path, no, field,body).subscribe((response: any) => {
+      console.log(formData);
+      let path = this.api.currentPath + '/' + this.file['name']
+      this.api.put(path, no, field,formData).subscribe((response: any) => {
         if(response['flag']>0){
           this.toast.success({detail :'Success', summary : response.desc, sticky : true, position : 'br'});
         }
@@ -37,19 +46,21 @@ export class AddFileComponent implements OnInit {
           this.toast.error({detail :'Error', summary : response.desc, sticky : true, position : 'br'}); 
         }
       });
-      // console.log(this.file);
-      // let fileReader = new FileReader();
-      // fileReader.onload = (e) => {
-      //   console.log(fileReader.result);
-      // }
-      // fileReader.readAsText(this.file);
+      }
+      fileReader.readAsText(this.file);
+      
+      console.log(this.file);
+      
     }
 
     else{
+      let formData = new FormData();
+      formData.append('file',this.file);
       const body = {file: this.file}
-      console.log('Create:' + this.api.currentPath + name);
-      let path = this.api.currentPath + name
-      this.api.put(path, no, field,body).subscribe((response: any) => {
+      console.log(formData);
+      console.log('Create:' + this.api.currentPath + this.file['name']);
+      let path = this.api.currentPath + this.file['name'];
+      this.api.put(path, no, field,formData).subscribe((response: any) => {
         if(response['flag']>0){
           this.toast.success({detail :'Success', summary : response.desc, sticky : true, position : 'br'});
         }
