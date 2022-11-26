@@ -27,14 +27,8 @@ export class AddFileComponent implements OnInit {
     if (this.api.currentPath.length > 1) {
       //call mkdir
       console.log('Create:' + this.api.currentPath + '/' + this.file['name']);
-      let fileReader = new FileReader();
-      fileReader.onload = (e) => {
-        console.log(fileReader.result);
-        data = fileReader.result
-        console.log(typeof data);
-        // let fileJson = JSON.parse(data);
-        let formData = new FormData();
-      formData.append('file',data);
+      let formData = new FormData();
+      formData.append('file',this.file);
       const body = {file: this.file}
       console.log(formData);
       let path = this.api.currentPath + '/' + this.file['name']
@@ -46,8 +40,15 @@ export class AddFileComponent implements OnInit {
           this.toast.error({detail :'Error', summary : response.desc, sticky : true, position : 'br'}); 
         }
       });
-      }
-      fileReader.readAsText(this.file);
+      //let fileReader = new FileReader();
+      //fileReader.onload = (e) => {
+        //console.log(fileReader.result);
+        //data = fileReader.result
+        //console.log(typeof data);
+        // let fileJson = JSON.parse(data);
+        
+      //}
+      //fileReader.readAsText(this.file);
       
       console.log(this.file);
       

@@ -42,3 +42,25 @@ mat-dialog-container#modal-component {
     flex-direction: column;
     justify-content: space-around;
 }
+
+.input-field{
+    font-size: inherit;
+    font-weight: 400;
+    line-height: 3.65;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    letter-spacing: normal;
+    color: white;
+    background: #555555;
+    border: none;
+}
+
+.input-field:focus{
+    border: none;
+    outline: none;
+}
+
+.add-file-component{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+}

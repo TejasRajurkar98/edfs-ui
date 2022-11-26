@@ -7,7 +7,8 @@ import {faX} from '@fortawesome/free-solid-svg-icons'
 interface columnFilter{
   column: String,
   operator: String,
-  value: number
+  value: String,
+  condition: String
 }
 interface operator{
   name: String,
@@ -41,12 +42,27 @@ export class SearchComponent implements OnInit {
   jsonData : any;
   data : any
   faCross = faX;
-
+  conditions = ['and', 'or']
 
   constructor(public dialogRef: MatDialogRef<SearchComponent>, public api: ApiService) { }
 
   ngOnInit(): void {
     this.columns = this.api.columns;
+    this.columnFilters.push({
+      column : '',
+      operator : '',
+      value : '',
+      condition :''
+    });
+  }
+
+  addFilter(){
+    this.columnFilters.push({
+      column: '',
+      operator: '',
+      value: '',
+      condition: ''
+    });
   }
 
   // When the user clicks the action button a.k.a. the logout button in the\
@@ -67,13 +83,7 @@ export class SearchComponent implements OnInit {
       "filePath": this.api.currentPath,
       "aggregatorFunction": this.selectedAggregator,
       "aggregatorColumn": this.selectedAggregatorColumn,
-      "columnFilters": [
-          {
-            "column": this.selectedFilterColumn,
-            "operator": this.selectedOperator,
-            "value": this.selectedValue
-          }
-      ],
+      "columnFilters": this.columnFilters,
       "displayColumns": this.selectedColumns,
       "distinctCols": this.selectedDistinctColumns,
       "groupedBy": this.selectedGroupByColumns

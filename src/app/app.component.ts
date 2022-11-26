@@ -7,7 +7,7 @@ import { AddFileComponent } from './add-file/add-file.component';
 import { SearchComponent } from './search/search.component';
 import { ViewPartitionComponent } from './view-partition/view-partition.component';
 import {RemoveFileComponent} from './remove-file/remove-file.component';
-import {NgToastService} from 'ng-angular-popup';
+import {NgxSpinnerService} from 'ngx-spinner'
 
 
 interface Children {
@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
   jsonData: any;
   removeFile = false;
 
-  constructor(public matDialog: MatDialog, public api: ApiService) { }
+  constructor(public matDialog: MatDialog, public api: ApiService, public spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.currentPath = '/';
@@ -56,14 +56,16 @@ export class AppComponent implements OnInit {
     
     //call ls of root at start
     this.api.ls(this.currentPath).subscribe((response: any) => {
+      this.spinner.show();
       this.children = response['files'];
       this.api.children = this.children;
-    })
+      this.spinner.hide();
+    });
     // this.children = ['Tejas', 'Zainab', 'Qasim', 'Hello.csv'];
   }
 
-  print() {
-    console.log(this.selectedDatabase);
+  changeDB() {
+    this.api.database = this.selectedDatabase;
   }
 
   explore(name: String) {
@@ -72,9 +74,12 @@ export class AppComponent implements OnInit {
       this.api.currentPath = this.currentPath;
       //call ls of name
       this.api.ls(this.currentPath).subscribe((response: any) => {
+        this.spinner.show();
         this.children = response['files'];
         this.api.children = this.children;
-      })
+        this.spinner.hide();
+      });
+      
       // if(name == 'Tejas'){
   
       //   this.children = ['Cars.csv', 'User'];
@@ -97,6 +102,7 @@ export class AppComponent implements OnInit {
     //call ls of currentPath
     // this.children = ['Tejas', 'Zainab', 'Qasim', 'Hello.csv'];
     this.api.ls(this.currentPath).subscribe((response: any) => {
+      this.spinner.show();
       this.children = response['files'];
       this.showFile = false;
       this.data = null;
@@ -105,6 +111,7 @@ export class AppComponent implements OnInit {
       this.api.columns = [];
       this.api.children = this.children;
       console.log("On Back Data:" + this.data);
+      this.spinner.hide();
     });
   }
 
@@ -123,8 +130,10 @@ export class AppComponent implements OnInit {
     const modalDialog = this.matDialog.open(AddFolderComponent, dialogConfig);
     modalDialog.afterClosed().subscribe(()=>{
       this.api.ls(this.currentPath).subscribe((response: any) => {
+        this.spinner.show();
         this.children = response['files'];
         this.api.children = this.children;
+        this.spinner.hide();
       })
     });
   }
@@ -140,9 +149,11 @@ export class AppComponent implements OnInit {
     const modalDialog = this.matDialog.open(AddFileComponent, dialogConfig);
     modalDialog.afterClosed().subscribe(()=>{
       this.api.ls(this.currentPath).subscribe((response: any) => {
+        this.spinner.show();
         this.children = response['files'];
         this.api.children = this.children;
-      })
+        this.spinner.hide();
+      });
     });
   }
 
@@ -157,9 +168,11 @@ export class AppComponent implements OnInit {
     const modalDialog = this.matDialog.open(RemoveFileComponent, dialogConfig);
     modalDialog.afterClosed().subscribe(()=>{
       this.api.ls(this.currentPath).subscribe((response: any) => {
+        this.spinner.show();
         this.children = response['files'];
         this.api.children = this.children;
-      })
+        this.spinner.hide();
+      });
     });
   }
 
@@ -198,6 +211,7 @@ export class AppComponent implements OnInit {
     this.data = null;
     this.jsonData = null;
     this.api.cat(this.currentPath).subscribe((response: any) =>{
+      this.spinner.show();
       this.jsonData = response;
       for (let x of this.jsonData['schema']['fields']) {
         this.columns.push(x['name']);
@@ -206,6 +220,7 @@ export class AppComponent implements OnInit {
       this.data = this.jsonData['data'];
       this.showFile = true;
       this.api.columns = this.columns;
+      this.spinner.hide();
     });
   }
 

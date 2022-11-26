@@ -19,6 +19,7 @@ import { ViewPartitionComponent } from './view-partition/view-partition.componen
 import {HttpClientModule} from '@angular/common/http';
 import {NgToastModule} from 'ng-angular-popup';
 import { RemoveFileComponent } from './remove-file/remove-file.component';
+import {NgxSpinnerModule} from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -42,8 +43,8 @@ import { RemoveFileComponent } from './remove-file/remove-file.component';
     MatTableModule,
     FormsModule,
     HttpClientModule,
-    NgToastModule
-  
+    NgToastModule,
+    NgxSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

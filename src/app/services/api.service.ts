@@ -48,13 +48,3 @@ export class ApiService {
     return this.http.post(`${this.BASE_URL}${this.database}/put?path=${path}&no=${no}&field=${field}`, body);
   }
 }
-
-
-
-
-// filePath = '/new_df.csv'
-//     aggregatorFunction = 'SUM'
-//     aggregatorColumn = 'goals_scored'
-//     columnFilters = [{"team_code": {"greaterThan": ['7']}}]
-//     displayColumns = ['team_name', 'goals_scored']
-//     groupedBy = ['team_name']

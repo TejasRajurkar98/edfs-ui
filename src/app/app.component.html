@@ -343,7 +343,7 @@
     
     <span>
       <mat-form-field appearance="fill">
-        <mat-select [(value)]="this.selectedDatabase" (selectionChange)="print()">
+        <mat-select [(value)]="this.selectedDatabase" (selectionChange)="changeDB()">
           <mat-option *ngFor="let database of databases" [value]="database.value">
             {{database.name}}
           </mat-option>
@@ -354,20 +354,6 @@
   
 </div>
 
-<!-- <mat-sidenav-container class = "tp-container">
-  <mat-sidenav mode = "side" opened>
-      <ul *ngFor="let ele of lsResult" class = "tp-section">
-        {{ele}}
-      </ul>
-     <section class = "tp-section">
-        <span>File</span>
-     </section>
-     <section class = "tp-section">
-        <span>Edit</span>
-     </section>
-  </mat-sidenav>
-  <mat-sidenav-content>Main content</mat-sidenav-content>
-</mat-sidenav-container> -->
 <div>
   <div (click)="back()" class="back-button" >
     <span *ngIf="this.currentPath !='/'">
@@ -387,20 +373,7 @@
     </span>
   </div>
   <div *ngIf="showFile">
-    <!-- <table mat-table>
-      <tr mat-row>
-        <th mat-header *ngFor="let column of columns">
-          {{column}}
-        </th>
-      </tr>
-      <tr *ngFor="let record of data">
-        <td mat-cell *ngFor="let column of columns">
-          {{record[column]}}
 
-        </td>
-
-      </tr>
-    </table> -->
     <div class="table-responsive">
     <table mat-table [dataSource]="data" class="mat-elevation-z8">
       <ng-container [matColumnDef]="column" *ngFor="let column of columns">
@@ -419,4 +392,12 @@
 
 
 <lib-ng-toast></lib-ng-toast>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
 <router-outlet></router-outlet>
