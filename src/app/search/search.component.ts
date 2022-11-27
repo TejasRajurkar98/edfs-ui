@@ -28,7 +28,7 @@ interface apiColumnFilter{
 export class SearchComponent implements OnInit {
   columns: any[] = [];
   selectedColumns: any[]= [];
-  aggregators = ['Sum', 'Average', 'Count', 'Min', 'Max'];
+  aggregators = ['SUM', 'AVG', 'COUNT', 'MIN', 'MAX'];
   selectedAggregator = null;
   selectedAggregatorColumn = null;
   columnFilters: columnFilter[] = [];
