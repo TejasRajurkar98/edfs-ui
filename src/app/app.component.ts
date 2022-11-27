@@ -66,6 +66,13 @@ export class AppComponent implements OnInit {
 
   changeDB() {
     this.api.database = this.selectedDatabase;
+    this.api.ls(this.currentPath).subscribe((response: any) => {
+      this.spinner.show();
+      this.children = response['files'];
+      this.api.children = this.children;
+      this.spinner.hide();
+    });
+
   }
 
   explore(name: String) {

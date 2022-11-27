@@ -47,4 +47,8 @@ export class ApiService {
   public put(path: String, no: String, field: String, body: any){
     return this.http.post(`${this.BASE_URL}${this.database}/put?path=${path}&no=${no}&field=${field}`, body);
   }
+
+  public executeQuery(path: String, body: any){
+    return this.http.post(`${this.BASE_URL}${this.database}/search`, body);
+  }
 }
