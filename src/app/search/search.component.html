@@ -115,10 +115,11 @@
         </footer>
     </div>
 
-    <div *ngIf="showData" style="overflow: auto;">
+    <!-- <div *ngIf="showData" style="overflow: auto;">
         <fa-icon [icon] = 'faCross' (click)="closeModal()" style="display: flex; justify-content: flex-end;"></fa-icon>
         <header id="modal-header">
             <h1 id="modal-title">Query Result</h1>
+            <button mat-raised-button id="modal-action-button" (click)="explain()">Explain</button>
             
         </header>
         <section id="modal-body" style="overflow: auto;">
@@ -137,8 +138,91 @@
         <footer id="modal-footer">
             
         </footer>
-    </div>
+    </div> -->
     
+    
+    <div *ngIf="showData" style="overflow: auto;">
+        <fa-icon [icon] = 'faCross' (click)="closeModal()" style="display: flex; justify-content: flex-end;"></fa-icon>
+        <header id="modal-header">
+            <h1 id="modal-title" *ngIf="displayExplain">Query Result Explanation</h1>
+            <h1 id="modal-title" *ngIf="!displayExplain">Query Result</h1>
+            <button mat-raised-button id="modal-action-button" *ngIf="!displayExplain" (click)="explain()">Explain</button>
+            
+        </header>
+        <section id="modal-body" style="overflow: auto;">
+            <span *ngIf="displayExplain">
+                <span *ngIf="intermediateTable">
+                    <div class="table-responsive" *ngFor="let intermediate of inter; let i = index">
+                        <p>
+                            Partition {{i}}
+                        </p>
+                        
+                        <p>
+                        {{intermediate['message']}}
+                        </p>
+                        <table mat-table [dataSource]="getJsonData(intermediate['value'])" class="mat-elevation-z8">
+                          <ng-container [matColumnDef]="column" *ngFor="let column of columns">
+                            <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                            <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                          </ng-container>
+                        
+                          <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+                        </table>
+                        </div>
+
+                </span>
+                <span *ngIf="!intermediateTable">
+                    <div *ngFor="let intermediate of inter let i = index">
+                        <div>
+                            Partition {{i}}
+                            <p>
+                                {{intermediate['message']}} {{intermediate['value']}}
+                            </p>
+                            <!-- <p>
+                                Result: {{intermediate['value']}}
+                            </p> -->
+        
+                        </div>
+                    </div>
+                </span>
+
+            </span>
+            <div *ngIf="!finalTable">
+                <div>
+                    Final Result
+                    <p>
+                       {{jsonData['final_result']['message']}} {{jsonData['final_result']['value']}}
+                    </p>
+                    <!-- <p>
+                        Result: {{jsonData['final_result']['value']}}
+                    </p> -->
+                </div>
+            </div>
+            <div *ngIf="finalTable">
+                <div class="table-responsive" *ngIf="!intermediateTable">
+                    <table mat-table [dataSource]="finalData['data']" class="mat-elevation-z8">
+                      <ng-container [matColumnDef]="column" *ngFor="let column of columns">
+                        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                      </ng-container>
+                    
+                      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+                    </table>
+                    </div>
+                    <div *ngIf="intermediateTable">
+                        <p>
+                            {{final['message']}}
+                        </p>
+                    </div>
+
+            </div>
+        </section>
+        <footer id="modal-footer">
+            
+        </footer>
+    </div>
 </div>
 
 <ngx-spinner
