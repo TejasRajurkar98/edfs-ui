@@ -25,6 +25,10 @@ export class RemoveFileComponent implements OnInit {
     }
     this.children = files;
     this.currentPath = this.api.currentPath;
+    if(this.currentPath.length>1){
+      this.currentPath = this.currentPath + '/';
+    }
+      
   }
 
   // When the user clicks the action button a.k.a. the logout button in the\
