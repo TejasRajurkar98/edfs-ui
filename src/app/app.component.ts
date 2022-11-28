@@ -77,6 +77,9 @@ export class AppComponent implements OnInit {
 
   explore(name: String) {
     if(!name.split('.')[1]){
+      if(this.currentPath.length>1){
+        this.currentPath = this.currentPath + '/';
+      }
       this.currentPath = this.currentPath + name;
       this.api.currentPath = this.currentPath;
       //call ls of name
@@ -101,8 +104,15 @@ export class AppComponent implements OnInit {
   }
   back() {
     let path = this.currentPath.split('/');
+    let newPath = '';
     for (let x = 0; x < path.length - 1; x++) {
-      this.currentPath = '/' + path[x];
+      newPath = newPath + path[x]+ '/';
+    }
+    if(newPath.length != 1){
+      this.currentPath = newPath.slice(0, -1);
+    }
+    else{
+      this.currentPath = newPath;
     }
     console.log(this.currentPath)
     this.api.currentPath = this.currentPath

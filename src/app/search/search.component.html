@@ -45,7 +45,7 @@
                     <mat-label>Filter Field {{i+1}}:  </mat-label>
                 <mat-form-field appearance="fill">
                     <mat-select [(value)]="filter.column">
-                        <mat-option *ngFor="let column of selectedColumns" [value]="column">
+                        <mat-option *ngFor="let column of columns" [value]="column">
                             {{column}}
                         </mat-option>
                     </mat-select>
